@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:blog_app_frontend/Ai.dart';
 import 'package:blog_app_frontend/addPost.dart';
 import 'package:blog_app_frontend/custom_widget.dart';
 import 'package:blog_app_frontend/featuredBlog.dart';
+import 'package:blog_app_frontend/loginOrSignup.dart';
 import 'package:blog_app_frontend/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
@@ -163,11 +166,11 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(
-                    width: 128.0,
-                    height: 128.0,
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.width * 0.3,
                     margin: const EdgeInsets.only(
                       top: 24.0,
-                      bottom: 64.0,
+                      bottom: 35.0,
                     ),
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
@@ -179,43 +182,55 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                     ),
                   ),
                   ListTile(
-                    onTap: () {},
-                    leading: Icon(Icons.account_circle_rounded, size: 30),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => myProfile(
+                                  username: widget.username,
+                                  userId: widget.userId)));
+                    },
+                    leading: Icon(Icons.account_circle_rounded, size: 25),
                     title: Text(
                       'Profile',
-                      style: TextStyle(fontSize: 25, fontFamily: 'ComicaBoom'),
+                      style: TextStyle(fontSize: 22, fontFamily: 'ComicaBoom'),
                     ),
                   ),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Icons.bookmark_border, size: 30),
+                    leading: Icon(Icons.bookmark_border, size: 25),
                     title: Text(
                       'Saved',
-                      style: TextStyle(fontSize: 25, fontFamily: 'ComicaBoom'),
+                      style: TextStyle(fontSize: 22, fontFamily: 'ComicaBoom'),
                     ),
                   ),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Icons.settings, size: 30),
+                    leading: Icon(Icons.settings, size: 25),
                     title: Text(
                       'Settings',
-                      style: TextStyle(fontSize: 25, fontFamily: 'ComicaBoom'),
+                      style: TextStyle(fontSize: 22, fontFamily: 'ComicaBoom'),
                     ),
                   ),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Icons.feedback_outlined, size: 30),
+                    leading: Icon(Icons.feedback_outlined, size: 25),
                     title: Text(
                       'Feedback',
-                      style: TextStyle(fontSize: 25, fontFamily: 'ComicaBoom'),
+                      style: TextStyle(fontSize: 22, fontFamily: 'ComicaBoom'),
                     ),
                   ),
                   ListTile(
-                    onTap: () {},
-                    leading: Icon(Icons.logout, size: 30),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginOrSignup()));
+                    },
+                    leading: Icon(Icons.logout, size: 25),
                     title: Text(
                       'Logout',
-                      style: TextStyle(fontSize: 25, fontFamily: 'ComicaBoom'),
+                      style: TextStyle(fontSize: 22, fontFamily: 'ComicaBoom'),
                     ),
                   ),
                   Spacer(),
@@ -238,16 +253,6 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
         backdrop: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFFE2D3F5),
-                Color(0xFF6A0DAD),
-              ],
-            ),
-          ),
         ),
         controller: _advancedDrawerController,
         animationCurve: Curves.easeInOut,
@@ -272,37 +277,41 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
             extendBody: true,
             bottomNavigationBar: Align(
               alignment: Alignment.bottomCenter,
-              child: CircleNavBar(
-                height: 70,
-                activeIcons: const [
-                  Icon(FontAwesomeIcons.plus,
-                      color: Color(0xFFE2D3F5), size: 35),
-                  Icon(Icons.chat, color: Color(0xFFE2D3F5), size: 35),
-                  Icon(Icons.home, color: Color(0xFFE2D3F5), size: 35),
-                  Icon(Icons.favorite, color: Color(0xFFE2D3F5), size: 35),
-                  Icon(Icons.search, color: Color(0xFFE2D3F5), size: 35),
-                ],
-                inactiveIcons: const [
-                  Icon(FontAwesomeIcons.plus,
-                      color: Color(0xFF1D1B20), size: 35),
-                  Icon(Icons.chat_outlined, color: Color(0xFF1D1B20), size: 35),
-                  Icon(Icons.home_outlined, color: Color(0xFF1D1B20), size: 35),
-                  Icon(Icons.favorite_outline,
-                      color: Color(0xFF1D1B20), size: 35),
-                  Icon(Icons.search_outlined,
-                      color: Color(0xFF1D1B20), size: 35),
-                ],
-                color: Color(0xFF6A0DAD),
-                circleWidth: 70,
-                activeIndex: _tabIndex,
-                onTap: (index) {
-                  setState(() {
-                    _tabIndex = index;
-                  });
-                  pageController.jumpToPage(index);
-                },
-                padding: const EdgeInsets.all(0),
-                elevation: 10,
+              child: Container(
+                child: CircleNavBar(
+                  height: 70,
+                  activeIcons: const [
+                    Icon(FontAwesomeIcons.plus,
+                        color: Color(0xFFE2D3F5), size: 35),
+                    Icon(Icons.chat, color: Color(0xFFE2D3F5), size: 35),
+                    Icon(Icons.home, color: Color(0xFFE2D3F5), size: 35),
+                    Icon(Icons.favorite, color: Color(0xFFE2D3F5), size: 35),
+                    Icon(Icons.search, color: Color(0xFFE2D3F5), size: 35),
+                  ],
+                  inactiveIcons: const [
+                    Icon(FontAwesomeIcons.plus,
+                        color: Color(0xFF1D1B20), size: 35),
+                    Icon(Icons.chat_outlined,
+                        color: Color(0xFF1D1B20), size: 35),
+                    Icon(Icons.home_outlined,
+                        color: Color(0xFF1D1B20), size: 35),
+                    Icon(Icons.favorite_outline,
+                        color: Color(0xFF1D1B20), size: 35),
+                    Icon(Icons.search_outlined,
+                        color: Color(0xFF1D1B20), size: 35),
+                  ],
+                  color: Color(0xFF6A0DAD),
+                  circleWidth: 70,
+                  activeIndex: _tabIndex,
+                  onTap: (index) {
+                    setState(() {
+                      _tabIndex = index;
+                    });
+                    pageController.jumpToPage(index);
+                  },
+                  padding: const EdgeInsets.all(0),
+                  elevation: 10,
+                ),
               ),
             ),
             appBar: AppBar(
@@ -349,18 +358,20 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            body: Padding(
-              padding: const EdgeInsets.only(bottom: 85),
-              child: PageView(
-                controller: pageController,
-                onPageChanged: onPageChanged,
-                children: [
-                  _buildAddBlogPage(),
-                  _AIhelper(),
-                  buildHomePage(),
-                  _buildFavoritesPage(),
-                  _searchPage()
-                ],
+            body: Container(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 85),
+                child: PageView(
+                  controller: pageController,
+                  onPageChanged: onPageChanged,
+                  children: [
+                    _buildAddBlogPage(),
+                    _AIhelper(),
+                    buildHomePage(),
+                    _buildFavoritesPage(),
+                    _searchPage()
+                  ],
+                ),
               ),
             )));
   }
@@ -428,8 +439,17 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
     );
   }
 
+  void _handleMenuButtonPressed() {
+    // NOTICE: Manage Advanced Drawer state through the Controller.
+    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
+    _advancedDrawerController.showDrawer();
+  }
+
   Widget _searchPage() {
+    bool isFilled = false;
     TabController tabController = TabController(length: 4, vsync: this);
+    TextEditingController searchController = TextEditingController();
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -438,6 +458,12 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           Container(
             alignment: Alignment.topCenter,
             child: TextField(
+              controller: searchController,
+              onChanged: (value) {
+                setState(() {
+                  isFilled = value.isNotEmpty;
+                });
+              },
               decoration: InputDecoration(
                 hintText: 'Search Blogs',
                 border: OutlineInputBorder(
@@ -450,87 +476,67 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
           ),
           const SizedBox(height: 10),
           TabBar(
-              labelColor: Color(0xFFE2D3F5),
-              unselectedLabelColor: Colors.white,
-              labelStyle: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.035,
-                  fontFamily: 'Montesserat',
-                  fontWeight: FontWeight.bold),
-              controller: tabController,
-              tabs: [
-                Tab(
-                  icon: Icon(
-                    Icons.arrow_upward,
-                    size: 20,
-                  ),
-                  text: 'Top',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.new_releases,
-                    size: 20,
-                  ),
-                  text: 'Latest',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.person,
-                    size: 20,
-                  ),
-                  text: 'Authors',
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.category,
-                    size: 20,
-                  ),
-                  text: 'Genres',
-                ),
-              ]),
+            labelColor: Color(0xFFE2D3F5),
+            unselectedLabelColor: Colors.white,
+            labelStyle: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.035,
+              fontFamily: 'Montesserat',
+              fontWeight: FontWeight.bold,
+            ),
+            controller: tabController,
+            tabs: [
+              Tab(icon: Icon(Icons.arrow_upward, size: 20), text: 'Top'),
+              Tab(icon: Icon(Icons.new_releases, size: 20), text: 'Latest'),
+              Tab(icon: Icon(Icons.person, size: 20), text: 'Authors'),
+              Tab(icon: Icon(Icons.category, size: 20), text: 'Genres'),
+            ],
+          ),
           Expanded(
             child: TabBarView(
               controller: tabController,
               children: [
-                Icon(
-                  Icons.arrow_upward,
-                  size: 150,
-                  color: Color(0xFFE2D3F5),
+                _buildTopBlogs(context, searchController, isFilled),
+                Center(
+                  child: Icon(Icons.new_releases,
+                      size: 150, color: Color(0xFFE2D3F5)),
                 ),
-                Icon(
-                  Icons.new_releases,
-                  size: 150,
-                  color: Color(0xFFE2D3F5),
+                Center(
+                  child:
+                      Icon(Icons.person, size: 150, color: Color(0xFFE2D3F5)),
                 ),
-                Icon(
-                  Icons.person,
-                  size: 150,
-                  color: Color(0xFFE2D3F5),
+                Center(
+                  child:
+                      Icon(Icons.category, size: 150, color: Color(0xFFE2D3F5)),
                 ),
-                Icon(
-                  Icons.category,
-                  size: 150,
-                  color: Color(0xFFE2D3F5),
-                ),
-
-                // _buildTopBlogs(),
-                // _buildLatestBlogs(),
-                // _buildAuthors(),
-                // _buildGenres(),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  Widget _AIhelper() {
-    return GoogleGeminiIntegration();
+  Widget _buildTopBlogs(BuildContext context,
+      TextEditingController searchController, bool isFilled) {
+    return Container(
+      child: isFilled
+          ? Center(
+              child: Text(
+                'Search Results for "${searchController.text}"',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            )
+          : Center(
+              child: Image.asset(
+                'assets/images/errorimg.png',
+                height: MediaQuery.of(context).size.height * 0.35,
+              ),
+            ),
+    );
   }
+}
 
-  void _handleMenuButtonPressed() {
-    // NOTICE: Manage Advanced Drawer state through the Controller.
-    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
-    _advancedDrawerController.showDrawer();
-  }
+Widget _AIhelper() {
+  return Container();
 }

@@ -282,6 +282,7 @@ class _DetailsPageState extends State<FeaturedDetailsPage> {
                   //     // Colors.blueGrey
                   //   ],
                   AnimateGradient(
+                    
                     primaryColors: [
                       Color(0xFFE2D3F5),
                       Color(0xFF6A0DAD),

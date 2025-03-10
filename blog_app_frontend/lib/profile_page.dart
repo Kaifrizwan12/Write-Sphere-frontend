@@ -9,7 +9,17 @@ class myProfile extends StatefulWidget {
   final String username;
   final String userId;
 
-  const myProfile({super.key, required this.username, required this.userId});
+  final List<List<String>> myBlogs = [
+    ['What About Increasing Genocide ? ', '12 jan 2024'],
+    ['Sthephen Bartlett story?', '12 jan 2024'],
+    ['The Future of AI', '15 Feb 2024'],
+    ['Flutter vs React Native', '20 Mar 2024'],
+    ['Understanding Null Safety in Dart', '25 Apr 2024'],
+    ['Top 10 Programming Languages in 2024', '30 May 2024'],
+    ['How to Build a Blog App with Flutter', '10 Jun 2024'],
+  ];
+
+  myProfile({super.key, required this.username, required this.userId});
 
   @override
   State<myProfile> createState() => _myProfileState();
@@ -174,21 +184,32 @@ class _myProfileState extends State<myProfile> {
                                   return Container(
                                     height: MediaQuery.of(context).size.height *
                                         0.4,
-                                    child: Column(
-                                      children: [
-                                        _buildMyBlogItems(
-                                            userName: widget.username,
-                                            blogName:
-                                                'What About Increasing Genocide?',
-                                            blogDate: '12 jan 2024',
-                                            onTap: () {}),
-                                        _buildMyBlogItems(
-                                            userName: widget.username,
-                                            blogName:
-                                                'Sthephen Bartlett story?',
-                                            blogDate: '12 jan 2024',
-                                            onTap: () {}),
-                                      ],
+                                    child: SingleChildScrollView(
+                                      physics: const BouncingScrollPhysics(),
+                                      child: Container(
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.4,
+                                              child: ListView(
+                                                shrinkWrap: true,
+                                                children: widget.myBlogs
+                                                    .map((blog) =>
+                                                        _buildMyBlogItems(
+                                                            userName:
+                                                                widget.username,
+                                                            blogName: blog[0],
+                                                            blogDate: blog[1],
+                                                            onTap: () {}))
+                                                    .toList(),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   );
                                 })
