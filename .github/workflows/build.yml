@@ -13,22 +13,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Required for SonarQube to get full git history
+          fetch-depth: 0
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6' # or use 'latest' or your version
+          flutter-version: '3.19.6'
 
       - name: Install dependencies
+        working-directory: blog_app_frontend  # 👈 Change this to your Flutter project folder
         run: flutter pub get
 
-      - name: Analyze & Build (optional)
+      - name: Analyze & Build
+        working-directory: blog_app_frontend  # 👈 Again, change to your folder
         run: |
           flutter analyze
-          flutter build apk # or flutter build ios/web depending on your app
+          flutter build apk
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
+        with:
+          projectBaseDir: blog_app_frontend # 👈 Required to scan the right directory
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
