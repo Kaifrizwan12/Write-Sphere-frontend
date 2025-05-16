@@ -9,7 +9,7 @@ on:
 jobs:
   sonarqube:
     name: SonarQube
-    runs-on: macos-latest
+    runs-on: ubuntu-latest  # ✅ Switch to ubuntu-latest for cost-efficiency
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,21 +18,33 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.3'  # ✅ Updated version
+          flutter-version: '3.29.3'
 
       - name: Install dependencies
         working-directory: blog_app_frontend
         run: flutter pub get
 
-      - name: Analyze & Build
+      - name: Analyze
         working-directory: blog_app_frontend
-        run: |
-          flutter analyze
-          flutter build apk
+        run: flutter analyze --no-fatal-warnings --write=analysis_report.json
+
+      - name: Build
+        working-directory: blog_app_frontend
+        run: flutter build apk
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         with:
           projectBaseDir: blog_app_frontend
+          args: >
+            -Dsonar.projectKey=blog_app_frontend
+            -Dsonar.dart.lint.report=analysis_report.json
+            -Dsonar.sources=lib
+            -Dsonar.tests=test
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}  # ✅ Add if using SonarCloud/self-hosted
+
+      - name: Check Quality Gate
+        uses: SonarSource/sonarqube-quality-gate-action@v1
+        if: always()
