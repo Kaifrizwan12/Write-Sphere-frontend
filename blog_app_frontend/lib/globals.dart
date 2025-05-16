@@ -1,6 +1,5 @@
 library globals;
 
-import 'signup.dart' as signUp;
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String?> getUsername() async {

@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
 
-import 'package:blog_app_frontend/Ai.dart';
 import 'package:blog_app_frontend/addPost.dart';
 import 'package:blog_app_frontend/custom_widget.dart';
 import 'package:blog_app_frontend/featuredBlog.dart';

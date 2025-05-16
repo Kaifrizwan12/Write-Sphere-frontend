@@ -44,7 +44,6 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  final FocusNode _focusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   Color backgroundColor = getRandomColor(luminosity: 'dark');
   Color fontColor = getRandomColor(luminosity: 'light');

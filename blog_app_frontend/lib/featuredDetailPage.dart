@@ -4,7 +4,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:parallax_rain/parallax_rain.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:scroll_to_hide/scroll_to_hide.dart';
 import 'package:like_button/like_button.dart';

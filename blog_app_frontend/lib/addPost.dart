@@ -1,7 +1,5 @@
 // This file contains the code for the AddBlog class which is a function inside a stateful widget.
-import 'package:flutter_launcher_icons/main.dart';
 
-import 'demo.dart' as demo;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

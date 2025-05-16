@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
 class GoogleGeminiIntegration extends StatefulWidget {
