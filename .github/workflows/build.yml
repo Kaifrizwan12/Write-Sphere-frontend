@@ -1,4 +1,3 @@
-
 name: Build
 on:
   push:
@@ -6,6 +5,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
     name: SonarQube
@@ -18,14 +18,14 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
+          flutter-version: '3.22.0'  # ✅ Updated version
 
       - name: Install dependencies
-        working-directory: blog_app_frontend  # 👈 Change this to your Flutter project folder
+        working-directory: blog_app_frontend
         run: flutter pub get
 
       - name: Analyze & Build
-        working-directory: blog_app_frontend  # 👈 Again, change to your folder
+        working-directory: blog_app_frontend
         run: |
           flutter analyze
           flutter build apk
@@ -33,6 +33,6 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         with:
-          projectBaseDir: blog_app_frontend # 👈 Required to scan the right directory
+          projectBaseDir: blog_app_frontend
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
