@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:blog_app_frontend/Ai.dart';
@@ -11,12 +12,39 @@ import 'package:circle_nav_bar/circle_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Testing extends StatefulWidget {
   final String username;
   final String userId;
 
   Testing({super.key, required this.username, required this.userId});
+
+  Future<List<List<List<String>>>> fetchAllBlogs() async {
+    final response = await http.get(Uri.parse('YOUR_API_URL'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonData = jsonDecode(response.body);
+      List<List<List<String>>> blogs = [];
+
+      for (var blog in jsonData) {
+        blogs.add([
+          [blog['title']], // Title
+          [blog['summary']], // Summary
+          [blog['content']], // Content
+          [blog['author']], // Author
+          [blog['date']], // Date
+          List<String>.from(blog['categories']), // Categories
+          [blog['likes'].toString()], // Likes
+          [blog['comments'].toString()] // Comments
+        ]);
+      }
+
+      return blogs;
+    } else {
+      throw Exception('Failed to load blogs');
+    }
+  }
 
   final List<List<List<String>>> Blogs = [
     [
@@ -145,6 +173,7 @@ class _TestingState extends State<Testing> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     pageController = PageController(initialPage: _tabIndex);
+    debugPrint(widget.fetchAllBlogs().toString());
   }
 
   void onPageChanged(int index) {
